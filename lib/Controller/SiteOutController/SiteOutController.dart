@@ -42,6 +42,7 @@ class SiteOutController extends ChangeNotifier {
   List<ItemMasterDBModel> get getcategory => category;
   bool value = false;
   bool assignTo = false;
+  String? selectedRadioValue;
 
   void init(BuildContext context) {
     clearAll();

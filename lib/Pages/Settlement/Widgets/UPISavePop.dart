@@ -15,13 +15,14 @@ class UPIAlertBox extends StatefulWidget {
 }
 
 class UPIAlertBoxState extends State<UPIAlertBox> {
-    @override
+  @override
   void initState() {
     context.read<SettlementController>().settleToUpi = null;
 
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -74,74 +75,107 @@ class UPIAlertBoxState extends State<UPIAlertBox> {
                 top: Screens.bodyheight(context) * 0.03,
                 bottom: Screens.bodyheight(context) * 0.03,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: Screens.bodyheight(context)*0.02,
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "Total Amount Rs.${context.read<SettlementController>().totalUpi()}",
-                      style: theme.textTheme.bodySmall!
+              child: Form(
+                key: context.read<SettlementController>().formkey[3],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: Screens.bodyheight(context) * 0.02,
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "Total Amount Rs.${context.read<SettlementController>().totalUpi()}",
+                        style: theme.textTheme.bodySmall!
+                            .copyWith(color: Colors.grey),
+                      ),
+                    ),
+                     Container(
+                      width: Screens.width(context),
+                      child: DropdownButtonFormField(
+                        // hint: Text("Settlement"),
+                        // value: context.read<EnquiryUserContoller>(). valueChosedReason,
+                        //dropdownColor:Colors.green,
+                        icon: Icon(Icons.arrow_drop_down),
+                        iconSize: 30,
+                        validator: ((value) {
+                          if (value == null) {
+                            return "Please Select Bank..";
+                          }
+                          return null;
+                        }),
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                        isExpanded: true,
+
+                        value:
+                            context.read<SettlementController>().settleToUpi,
+                        onChanged: (val) {
+                          setState(() {
+                            context
+                                .read<SettlementController>()
+                                .chooseSettleToUPI(val.toString());
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Settlement',
+                          labelStyle: theme.textTheme.bodyText1!
+                              .copyWith(color: Colors.grey),
+
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                            //  when the TextFormField in unfocused
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                            //  when the TextFormField in focused
+                          ),
+                          border: UnderlineInputBorder(),
+                          // contentPadding: EdgeInsets.symmetric(
+                          //   horizontal: Screens.width(context) * 0.05,
+                          //   // vertical: Screens.width(context)
+                          // )
+                        ),
+                        items: <String>[
+                          "HDFC BANK",
+                          "CANARA BANK",
+                          "AXIS BANK",
+                          "SBI BANK",
+                        ].map((String value) {
+                          return DropdownMenuItem(
+                              value: value, child: Text(value.toString()));
+                        }).toList(),
+                      ),
+                    ),TextFormField(
+                        // controller: context
+                        //     .read<NewCollectionContoller>()
+                        //     .mycontroller[6],
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please Enter Reference..";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                      labelText: 'Reference',
+                      labelStyle: theme.textTheme.bodyText1!
                           .copyWith(color: Colors.grey),
-                    ),
-                  ),
-                  Container(
-                    width: Screens.width(context),
-                    child: DropdownButton(
-                      hint: Text("Settlement"),
-                      // value: context.read<EnquiryUserContoller>(). valueChosedReason,
-                      //dropdownColor:Colors.green,
-                      icon: Icon(Icons.arrow_drop_down),
-                      iconSize: 30,
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                      isExpanded: true,
-                      value: context.read<SettlementController>().settleToUpi,
-                      onChanged: (val) {
-                        setState(() {
-                          context
-                              .read<SettlementController>()
-                              .chooseSettleToUPI(val.toString());
-                        });
-                      },
-                      items: <String>["HDFC BANK", "CANARA BANK", "AXIS BANK", "SBI BANK",]
-                          .map((String value) {
-                        return DropdownMenuItem(
-                            value: value, child: Text(value.toString()));
-                      }).toList(),
-                    ),
-                  ),
-                  TextFormField(
-                      // controller: context
-                      //     .read<NewCollectionContoller>()
-                      //     .mycontroller[6],
-                      // validator: (value) {
-                      //   if (value!.isEmpty) {
-                      //     return "Enter Reference";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                    labelText: 'Reference',
-                    labelStyle:
-                        theme.textTheme.bodyText1!.copyWith(color: Colors.grey),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                      //  when the TextFormField in unfocused
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                      //  when the TextFormField in focused
-                    ),
-                    border: UnderlineInputBorder(),
-                    // enabledBorder: UnderlineInputBorder(),
-                    // focusedBorder: UnderlineInputBorder(),
-                    errorBorder: UnderlineInputBorder(),
-                    focusedErrorBorder: UnderlineInputBorder(),
-                  ))
-                ],
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        //  when the TextFormField in unfocused
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        //  when the TextFormField in focused
+                      ),
+                      border: UnderlineInputBorder(),
+                      // enabledBorder: UnderlineInputBorder(),
+                      // focusedBorder: UnderlineInputBorder(),
+                      errorBorder: UnderlineInputBorder(),
+                      focusedErrorBorder: UnderlineInputBorder(),
+                    ))
+                  ],
+                ),
               ),
             ),
             Container(
@@ -149,12 +183,14 @@ class UPIAlertBoxState extends State<UPIAlertBox> {
               height: Screens.bodyheight(context) * 0.06,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => SettlementSuccessUPI()));
+                  // Navigator.pop(context);
+                  context
+                      .read<SettlementController>()
+                      .validateFinalUpi(context);
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (_) => SettlementSuccessUPI()));
                 },
                 style: ElevatedButton.styleFrom(
                   textStyle: TextStyle(

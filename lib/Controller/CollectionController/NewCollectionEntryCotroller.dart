@@ -37,6 +37,7 @@ class NewCollectionContoller extends ChangeNotifier {
     notifyListeners();
   }
 
+
   static String? docNO;
   static String? title;
   List<String> paths = [];
@@ -79,6 +80,9 @@ class NewCollectionContoller extends ChangeNotifier {
     mycontroller[4].text = "";
     mycontroller[5].text = "";
     mycontroller[6].text = "";
+    mycontroller[7].text = "";
+    mycontroller[8].text = "";
+    mycontroller[9].text = "";
     notifyListeners();
   }
 
@@ -124,12 +128,12 @@ class NewCollectionContoller extends ChangeNotifier {
       BuildContext context, CollectionCustomerData? CollectionCusData) {
     if (formkey[1].currentState!.validate()) {
       productDetails.add(CollectionLineData(
-        amount: double.parse(mycontroller[0].text.toString()),
-        date: slelectedItemDate!,
-        invoice: slelectedIteminvoice,
-        purpose: CollectionCusData!.purpose,
-        type: CollectionCusData.type,
-      ));
+          amount: double.parse(mycontroller[0].text.toString()),
+          date: slelectedItemDate!,
+          invoice: slelectedIteminvoice,
+          purpose: CollectionCusData!.purpose,
+          type: CollectionCusData.type,
+          orgAmount: CollectionCusData.amount));
       showItemList = false;
       Navigator.pop(context);
       isUpdateClicked = false;
@@ -267,6 +271,19 @@ class NewCollectionContoller extends ChangeNotifier {
       isUpdateClicked = false;
     }
   }
+
+  // getAmount(CollectionLineData? lineList) {
+  //   double temp = 0.0;
+  //   // print("Temptemp=temp=temp=temp=temp"+allProductDetails.length.toString());
+  //   for (int i = 0; i < allProductDetails.length; i++) {
+  //     if (allProductDetails[i].date == lineList!.date &&
+  //         allProductDetails[i].invoice == lineList.invoice) {
+  //       // print("Temptemp=temp=temp=temp=temp="+lineList.amount.toString());
+  //       temp = lineList.amount;
+  //     }
+  //   }
+  //   return temp;
+  // }
 
   showBottomSheetInsert(BuildContext context, int i) {
     final theme = Theme.of(context);
@@ -443,11 +460,11 @@ class NewCollectionContoller extends ChangeNotifier {
                           onChanged: (val) {},
                           validator: (value) {
                             print("Amount value" +
-                                getProduct[i].amount.toString());
-                            if (value!.isEmpty) {
+                                double.parse(value!).toString());
+                            if (value.isEmpty) {
                               return "ENTER AMOUNT";
-                            } else if (getProduct[i].amount <
-                                double.parse(value)) {
+                            } else if (double.parse(value) >
+                                getProduct[i].orgAmount) {
                               return "Enter Correct Amount";
                             } else if (0 == double.parse(value)) {
                               return "Enter Correct Amount";
@@ -733,6 +750,7 @@ class CollectionLineData {
   String purpose;
   double amount;
   String type;
+  double orgAmount;
 
   CollectionLineData({
     required this.invoice,
@@ -740,6 +758,7 @@ class CollectionLineData {
     required this.purpose,
     required this.amount,
     required this.type,
+    required this.orgAmount,
   });
 }
 

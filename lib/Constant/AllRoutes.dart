@@ -3,6 +3,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:sellerkit/Pages/DayStartEnd/Screens/DayEnd.dart';
+import 'package:sellerkit/Pages/LeaveRequest/Screen/LeaveReqPage.dart';
 // import 'package:sellerkit/Pages/Leads/NewLead.dart';
 // import 'package:sellerkit/Pages/Leads/Widgets/OpenLead.dart';
 import 'package:sellerkit/Pages/Login/Screen/LoginScreen.dart';
@@ -373,6 +374,12 @@ class Routes {
     GetPage<dynamic>(
         name: ConstantRoutes.dayEndPage,
         page: () => DayEndPage(),
+        transition: Transition.fade,
+        transitionDuration: Duration(seconds: 1)),
+
+          GetPage<dynamic>(
+        name: ConstantRoutes.leaveReq,
+        page: () => LeaveReqPage(),
         transition: Transition.fade,
         transitionDuration: Duration(seconds: 1)),
   ];

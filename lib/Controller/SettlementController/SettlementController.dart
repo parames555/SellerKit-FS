@@ -5,12 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:sellerkit/Pages/Settlement/Widgets/DDSavePop.dart';
+import 'package:sellerkit/Pages/Settlement/Widgets/SettCardSuccessBox%20.dart';
+import 'package:sellerkit/Pages/Settlement/Widgets/SettChequeSuccessBox.dart';
+import 'package:sellerkit/Pages/Settlement/Widgets/SettUPISuccessBox.dart';
 import 'package:sellerkit/Pages/Settlement/Widgets/UPISavePop.dart';
 
 import '../../Constant/ConstantRoutes.dart';
 import '../../Pages/Settlement/Widgets/CardSavePop.dart';
 import '../../Pages/Settlement/Widgets/CashSavePop.dart';
 import '../../Pages/Settlement/Widgets/ChequeSavePop.dart';
+import '../../Pages/Settlement/Widgets/SettlementSuccessBox.dart';
 import '../../Widgets/SucessDialagBox.dart';
 
 class SettlementController extends ChangeNotifier {
@@ -19,6 +23,8 @@ class SettlementController extends ChangeNotifier {
     SplitMethod();
   }
 
+  List<GlobalKey<FormState>> formkey =
+      List.generate(5, (i) => GlobalKey<FormState>());
   List<SettlementList> settlementList = [];
   List<SettlementList> cashList = [];
   List<SettlementList> cardList = [];
@@ -59,6 +65,51 @@ class SettlementController extends ChangeNotifier {
     notifyListeners();
   }
 
+  validateFinalCash(BuildContext context) {
+    if (formkey[0].currentState!.validate()) {
+      Navigator.pop(context);
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => SettlementSuccessPage()));
+    }
+  }
+
+  validateFinalCard(BuildContext context) {
+    if (formkey[1].currentState!.validate()) {
+      Navigator.pop(context);
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => SettlementSuccessCard()));
+    }
+  }
+
+  validateFinalCheque(BuildContext context) {
+    if (formkey[2].currentState!.validate()) {
+      Navigator.pop(context);
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => SettlementSuccessCheque()));
+    }
+  }
+
+  validateFinalUpi(BuildContext context) {
+    if (formkey[3].currentState!.validate()) {
+      Navigator.pop(context);
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => SettlementSuccessUPI()));
+    }
+  }
+
+  validateFinalDD(BuildContext context) {
+    if (formkey[4].currentState!.validate()) {
+      Navigator.pop(context);
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => SettlementSuccessUPI()));
+    }
+  }
+
   //  showDialog<dynamic>(
   //         context: context,
   //         builder: (_) {
@@ -90,11 +141,11 @@ class SettlementController extends ChangeNotifier {
           builder: (_) {
             // context.read<EnquiryUserContoller>(). showSpecificDialog();
             //   context.read<EnquiryUserContoller>().showSuccessDia();
-            return CashAlertBox(
-            );
+            return CashAlertBox();
           });
     }
   }
+
   validateMethodcard(BuildContext context) {
     double val = 0.00;
     for (int i = 0; i < cardList.length; i++) {
@@ -124,7 +175,8 @@ class SettlementController extends ChangeNotifier {
           });
     }
   }
-   validateMethodcheque(BuildContext context) {
+
+  validateMethodcheque(BuildContext context) {
     double val = 0.00;
     for (int i = 0; i < chequeList.length; i++) {
       if (chequeList[i].isselect == true) {
@@ -153,7 +205,8 @@ class SettlementController extends ChangeNotifier {
           });
     }
   }
- validateMethodUpi(BuildContext context) {
+
+  validateMethodUpi(BuildContext context) {
     double val = 0.00;
     for (int i = 0; i < upiList.length; i++) {
       if (upiList[i].isselect == true) {
@@ -182,7 +235,8 @@ class SettlementController extends ChangeNotifier {
           });
     }
   }
-   validateMethodDD(BuildContext context) {
+
+  validateMethodDD(BuildContext context) {
     double val = 0.00;
     for (int i = 0; i < ddtList.length; i++) {
       if (ddtList[i].isselect == true) {
@@ -211,6 +265,7 @@ class SettlementController extends ChangeNotifier {
           });
     }
   }
+
   getData() {
     settlementList = [
       SettlementList(
@@ -426,29 +481,30 @@ class SettlementController extends ChangeNotifier {
 
 // }
 
-    cashList[i].isselect =! cashList[i].isselect!;
+    cashList[i].isselect = !cashList[i].isselect!;
     print(cashList[i].isselect);
     notifyListeners();
   }
 
   iselectMethodCard(int i) {
-    cardList[i].isselect =!  cardList[i].isselect!;
+    cardList[i].isselect = !cardList[i].isselect!;
     notifyListeners();
   }
- 
+
   iselectMethodCheque(int i) {
-   
-    chequeList[i].isselect =! chequeList[i].isselect!;
+    chequeList[i].isselect = !chequeList[i].isselect!;
     notifyListeners();
   }
 
   iselectMethodUpi(int i) {
-    upiList[i].isselect =! upiList[i].isselect!;
+    upiList[i].isselect = !upiList[i].isselect!;
     notifyListeners();
   }
 
-  iselectMethodDD(int i,) {
-    ddtList[i].isselect =!  ddtList[i].isselect!;
+  iselectMethodDD(
+    int i,
+  ) {
+    ddtList[i].isselect = !ddtList[i].isselect!;
     notifyListeners();
   }
 

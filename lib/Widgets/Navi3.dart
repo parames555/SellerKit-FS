@@ -302,6 +302,7 @@ Container drawer3(BuildContext context) {
                               IconContainer(
                                 theme: theme,
                                 callback: () {
+                                  Get.toNamed(ConstantRoutes.leaveReq);
                                   // if (MenuAuthDetail.Challenges == "Y") {
                                   //   Navigator.pop(context);
                                   //   // Navigator.push(
