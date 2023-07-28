@@ -4,8 +4,6 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:sellerkit/Pages/DayStartEnd/Screens/DayEnd.dart';
 import 'package:sellerkit/Pages/LeaveRequest/Screen/LeaveReqPage.dart';
-// import 'package:sellerkit/Pages/Leads/NewLead.dart';
-// import 'package:sellerkit/Pages/Leads/Widgets/OpenLead.dart';
 import 'package:sellerkit/Pages/Login/Screen/LoginScreen.dart';
 import 'package:sellerkit/Pages/Mycustomer/screens/Accounts.dart';
 import 'package:sellerkit/Pages/OnBoarding/OnBoardingScreen.dart';
@@ -13,16 +11,11 @@ import 'package:sellerkit/Pages/PriceAvailability/Screen/PriceDetailsPage.dart';
 import 'package:sellerkit/Pages/SiteIn/Widgets/NewSiteIn.dart';
 import 'package:sellerkit/Pages/Splash/Screen/SplashPage.dart';
 import 'package:sellerkit/Pages/Notification/Screens/Notifications.dart';
-// import '../Pages/Collection/NewCollectionEntry.dart';
-// import '../Pages/Collection/Screens/CollectionList.dart';
-// import '../Pages/Collection/widgets/CollectionSuccessPage.dart';
 import '../Pages/Collection/NewCollectionEntry.dart';
 import '../Pages/Collection/Screens/CollectionList.dart';
 import '../Pages/Collection/widgets/CollectionSuccessPage.dart';
 import '../Pages/Dashboard/Screens/Dashboard.dart';
 import '../Pages/Dashboard/widgets/PhotoViwer.dart';
-// import '../Pages/DayStartEnd/Screens/DayStartEnd.dart';
-// import '../Pages/DayStartEnd/Widgets/CameraPage.dart';
 import '../Pages/DayStartEnd/Screens/DayStart.dart';
 import '../Pages/DayStartEnd/Widgets/CameraPage.dart';
 import '../Pages/DownloadDatasPage.dart/DownloadDataPage.dart';
@@ -36,17 +29,13 @@ import '../Pages/Followup/Screens/FollowUpTabScreen.dart';
 import '../Pages/ForgotPassword/Screens/ForgotPassword.dart';
 import '../Pages/ForgotPassword/widgets/ConfirmPassword.dart';
 import '../Pages/GoalTracker/Screen/GoalTracker.dart';
-// import '../Pages/Leads/Screens/LeadSuccessPage.dart';
-// import '../Pages/Leads/Screens/TabLeads.dart';
+import '../Pages/LeaveApprove/Screens/LeaveAppList.dart';
+import '../Pages/LeaveApprove/Screens/LeaveApprovePage.dart';
 import '../Pages/MyEarnings/Screens/MyEarnings.dart';
 import '../Pages/MyPerformance/Screens/MyPerformance.dart';
-// import '../Pages/Mycustomer/NewCustomer.dart';
-// import '../Pages/Mycustomer/screens/AccoountsDetails.dart';
-// import '../Pages/Mycustomer/screens/Accounts.dart';
 import '../Pages/Mycustomer/NewCustomer.dart';
 import '../Pages/Mycustomer/screens/AccoountsDetails.dart';
 import '../Pages/OfferZone/Screens/OfferZone.dart';
-import '../Pages/OpenLead/Screen/FilterOpenLeadPage.dart';
 import '../Pages/OpenLead/Screen/OpenLeadPage.dart';
 import '../Pages/OrderBooking/NewLead.dart';
 import '../Pages/OrderBooking/Screens/LeadSuccessPage.dart';
@@ -63,8 +52,6 @@ import '../Pages/SiteOut/Screens/SiteOut.dart';
 import '../Pages/Stock Availability/screens/StockDetailsPage.dart';
 import '../Pages/Stock Availability/screens/StockListFPage.dart';
 import '../Pages/Stock Availability/screens/ViewAllStockListPage.dart';
-// import '../Pages/VisitPlans/Screens/NewVisitPlan.dart';
-// import '../Pages/VisitPlans/visitplanScreen.dart';
 import '../Pages/VisitPlans/Screens/NewVisitPlan.dart';
 import '../Pages/VisitPlans/visitplanScreen.dart';
 import '../Pages/Walkins/Screens/Walkins.dart';
@@ -377,10 +364,23 @@ class Routes {
         transition: Transition.fade,
         transitionDuration: Duration(seconds: 1)),
 
-          GetPage<dynamic>(
+        GetPage<dynamic>(
         name: ConstantRoutes.leaveReq,
         page: () => LeaveReqPage(),
         transition: Transition.fade,
         transitionDuration: Duration(seconds: 1)),
+        
+        GetPage<dynamic>(
+        name: ConstantRoutes.leaveApprove,
+        page: () => LeaveApprovePage(),
+        transition: Transition.fade,
+        transitionDuration: Duration(seconds: 1)),
+
+        GetPage<dynamic>(
+        name: ConstantRoutes.leaveApprList,
+        page: () => LeaveAppList(),
+        transition: Transition.fade,
+        transitionDuration: Duration(seconds: 1)),
+ 
   ];
 }

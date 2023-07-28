@@ -335,7 +335,9 @@ Container drawer3(BuildContext context) {
                               ),
                               IconContainer(
                                 theme: theme,
-                                callback: () {},
+                                callback: () {
+                                  Get.toNamed(ConstantRoutes.leaveApprList);
+                                },
                                 icon: Icons.beenhere,
                                 iconColor: theme.primaryColor,
                                 title: 'Leave Approval',

@@ -26,6 +26,8 @@ import 'Controller/CollectionController/CollectionController.dart';
 import 'Controller/CollectionController/NewCollectionEntryCotroller.dart';
 import 'Controller/DayStartEndController/DayStartEndController.dart';
 import 'Controller/LeadController/TabLeadController.dart';
+import 'Controller/LeaveApproveController/LeaveApproveController.dart';
+import 'Controller/LeaveReqController/LeaveReqController.dart';
 import 'Controller/MyCustomerController/AccountsController.dart';
 import 'Controller/MyCustomerController/NewCustomerController.dart';
 import 'Controller/PriceListController/PriceListController.dart';
@@ -157,7 +159,7 @@ void main() async {
   runApp(const MyApp());
 }
 
-testMethod(){
+testMethod() {
   log("AAAA");
 }
 
@@ -188,10 +190,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NewVisitplanController()),
         ChangeNotifierProvider(create: (_) => VisitplanController()),
         ChangeNotifierProvider(create: (_) => DayStartEndController()),
-        ChangeNotifierProvider(create: (_) => SettlementController()),//SiteInController
-        ChangeNotifierProvider(create: (_) => SiteInController()),//SiteOutController
+        ChangeNotifierProvider(
+            create: (_) => SettlementController()), //SiteInController
+        ChangeNotifierProvider(
+            create: (_) => SiteInController()), //SiteOutController
         ChangeNotifierProvider(create: (_) => SiteOutController()),
-
+        ChangeNotifierProvider(create: (_) => LeaveReqContoller()),
+        ChangeNotifierProvider(create: (_) => LeaveApproveContoller()),
       ],
       child: Consumer<ThemeManager>(builder: (context, themes, Widget? child) {
         return GetMaterialApp(

@@ -60,6 +60,8 @@ class ConstantRoutes {
   static String siteOut = "/SiteOut";
   static String dayEndPage ="/DayEndPage";
   static String  leaveReq="/LeaveReq";
+  static String  leaveApprove="/LeaveApprove";
+  static String  leaveApprList="/LeaveApprList";
 
 }
 
