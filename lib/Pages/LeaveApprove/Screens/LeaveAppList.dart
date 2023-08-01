@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:sellerkit/Constant/ConstantRoutes.dart';
 import '../../../Constant/Screen.dart';
 import '../../../Constant/padings.dart';
+import '../../../Controller/LeaveApproveController/LeaveApproveController.dart';
 import '../../../Widgets/Appbar.dart';
 import '../../../Widgets/Navi3.dart';
 
@@ -27,270 +29,229 @@ class _LeaveAppListState extends State<LeaveAppList> {
 
 // callKpiApi();
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   context.read<AccountsContoller>().callKpiApi();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<LeaveApproveContoller>().init(context);
+    });
   }
- DateTime? currentBackPressTime;
+
+  DateTime? currentBackPressTime;
   Future<bool> onbackpress() {
     DateTime now = DateTime.now();
-  
-      if (currentBackPressTime == null ||
+
+    if (currentBackPressTime == null ||
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
-        currentBackPressTime = now;
-        Get.offAllNamed(ConstantRoutes.dashboard);
-        return Future.value(true);
-      } else {
-        return Future.value(true);
-      }
+      currentBackPressTime = now;
+      Get.offAllNamed(ConstantRoutes.dashboard);
+      return Future.value(true);
+    } else {
+      return Future.value(true);
     }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return WillPopScope(
-      onWillPop:onbackpress,
+      onWillPop: onbackpress,
       child: Scaffold(
-          key: scaffoldKey,
-          drawer: drawer3(context),
-          appBar: appbar("Leave Request List", theme, context),
-          body: SafeArea(
-            child: Stack(
-              children: [
-                Container(
-                  width: Screens.width(context),
-                  height: Screens.bodyheight(context),
-                  padding: paddings.padding2(context),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: Screens.bodyheight(context) * 0.01,
+        key: scaffoldKey,
+        drawer: drawer3(context),
+        appBar: appbar("Leave Request List", theme, context),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Container(
+                width: Screens.width(context),
+                height: Screens.bodyheight(context),
+                padding: paddings.padding2(context),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: Screens.bodyheight(context) * 0.01,
+                    ),
+                    // SearchWidget(themes: theme),
+                    // SearchbarWidget(
+                    //   theme: theme,
+                    //   accountsContoller: prdACC,
+                    // ),
+                    Container(
+                      height: Screens.bodyheight(context) * 0.06,
+                      decoration: BoxDecoration(
+                        color: theme.primaryColor
+                            .withOpacity(0.1), //Colors.grey[200],
+                        borderRadius: BorderRadius.circular(
+                            Screens.width(context) * 0.02),
                       ),
-                      // SearchWidget(themes: theme),
-                      // SearchbarWidget(
-                      //   theme: theme,
-                      //   accountsContoller: prdACC,
-                      // ),
-                      Container(
-                        height: Screens.bodyheight(context) * 0.06,
-                        decoration: BoxDecoration(
-                          color: theme.primaryColor
-                              .withOpacity(0.1), //Colors.grey[200],
-                          borderRadius: BorderRadius.circular(
-                              Screens.width(context) * 0.02),
-                        ),
-                        child: TextField(
-                          autocorrect: false,
-                          onChanged: (v) {
-                            //srdACC.SearchFilter(v);
-                          },
-                          decoration: InputDecoration(
-                            filled: false,
-                            hintText: 'Search Here!!..',
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.search),
-                              onPressed: () {
-                                FocusScopeNode focus = FocusScope.of(context);
-                                if (!focus.hasPrimaryFocus) {
-                                  focus.unfocus();
-                                }
-                                // accountsContoller.boolmethod();
-                                // Get.offAllNamed(ConstantRoutes.cartLoading);
-                                // setState(() {
-                                // prdACC.boolmethod();
-                                // });
-                              }, //
-                              color: theme.primaryColor,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 5,
-                            ),
+                      child: TextField(
+                        autocorrect: false,
+                        onChanged: (v) {
+                          //srdACC.SearchFilter(v);
+                        },
+                        decoration: InputDecoration(
+                          filled: false,
+                          hintText: 'Search Here!!..',
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: () {
+                              FocusScopeNode focus = FocusScope.of(context);
+                              if (!focus.hasPrimaryFocus) {
+                                focus.unfocus();
+                              }
+                              // accountsContoller.boolmethod();
+                              // Get.offAllNamed(ConstantRoutes.cartLoading);
+                              // setState(() {
+                              // prdACC.boolmethod();
+                              // });
+                            }, //
+                            color: theme.primaryColor,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 5,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: Screens.bodyheight(context) * 0.005,
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: 10,
-                          //  prdACC
-                          //     .getAccountsDataFilter
-                          //     .length,
-                          // prdACC.getAccountsData.length,
-                          itemBuilder: (BuildContext context, int i) {
-                            return Card(
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // AccountsDetailsState
-                                  //         .data =
-                                  //     "Balamurugan";
-                                  // Get.toNamed(
-                                  //     ConstantRoutes
-                                  //         .accountsDetails);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(
-                                      Screens.bodyheight(context) * 0.005),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Row(
+                    ),
+                    SizedBox(
+                      height: Screens.bodyheight(context) * 0.005,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: context
+                            .watch<LeaveApproveContoller>()
+                            .filterListOfReq
+                            .length,
+                        //  prdACC
+                        //     .getAccountsDataFilter
+                        //     .length,
+                        // prdACC.getAccountsData.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          return Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            child: GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<LeaveApproveContoller>()
+                                    .setReqData(context
+                                        .read<LeaveApproveContoller>()
+                                        .filterListOfReq[i]);
+                                // AccountsDetailsState
+                                //         .data =
+                                //     "Balamurugan";
+                                Get.toNamed(ConstantRoutes.leaveApprove);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(
+                                    Screens.bodyheight(context) * 0.005),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(
+                                              Screens.bodyheight(context) *
+                                                  0.002),
+                                          alignment: Alignment.topLeft,
+                                          // color: Colors.amber,
+                                          // width: Screens.width(context) * 0.8,
+                                          child: Text(
+                                            "${context.read<LeaveApproveContoller>().filterListOfReq[i].empId}",
+                                            // "${AccountsData[i].cardname}",
+                                            // "${prdACC.getAccountsDataFilter[i].cardname}",
+                                            style: theme.textTheme.bodyText1
+                                                ?.copyWith(),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(
+                                              Screens.bodyheight(context) *
+                                                  0.002),
+                                          // color: Colors.amber,
+                                          alignment: Alignment.centerLeft,
+                                          // width: Screens.width(context) * 0.8,
+                                          child: Text(
+                                            "${context.read<LeaveApproveContoller>().filterListOfReq[i].empName}",
+                                            // "${AccountsData[i].street}",
+                                            // "${prdACC.getAccountsDataFilter[i].cardcode}",
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    // SizedBox(
+                                    //   height:
+                                    //       Screens.bodyheight(context) * 0.01,
+                                    // ),
+
+                                    IntrinsicHeight(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                padding: EdgeInsets.all(
-                                                    Screens.bodyheight(context) *
-                                                        0.002),
-                                                alignment: Alignment.topLeft,
-                                                // color:
-                                                //     Colors.amber,
-
-                                                width:
-                                                    Screens.width(context) * 0.4,
-                                                child: Text(
-                                                  "CBE0000A1",
-                                                  // "${AccountsData[i].cardname}",
-                                                  // "${prdACC.getAccountsDataFilter[i].cardname}",
-                                                  style: theme.textTheme.bodyText1
-                                                      ?.copyWith(),
-                                                ),
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.all(
-                                                    Screens.bodyheight(context) *
-                                                        0.005),
-                                                // color:
-                                                //     Colors.amber,
-                                                alignment: Alignment.centerLeft,
-
-                                                width:
-                                                    Screens.width(context) * 0.4,
-                                                child: Text(
-                                                  "Raman Furnitures",
-                                                  // "${AccountsData[i].street}",
-                                                  // "${prdACC.getAccountsDataFilter[i].cardcode}",
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                            ],
+                                          Container(
+                                            alignment: Alignment.topLeft,
+                                            padding: EdgeInsets.all(
+                                                Screens.bodyheight(context) *
+                                                    0.005),
+                                            width: Screens.width(context) * 0.4,
+                                            child: Text(
+                                              "${context.read<LeaveApproveContoller>().filterListOfReq[i].leaveType}",
+                                              style: theme.textTheme.bodyText1
+                                                  ?.copyWith(),
+                                            ),
                                           ),
                                           Container(
-                                            // color: Colors.blueGrey,
-                                            width: Screens.width(context) * 0.45,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.all(
-                                                      Screens.bodyheight(
-                                                              context) *
-                                                          0.002),
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: Text(
-                                                    "Cash",
-                                                    style: theme
-                                                        .textTheme.bodyText1
-                                                        ?.copyWith(),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  padding: EdgeInsets.all(
-                                                      Screens.bodyheight(
-                                                              context) *
-                                                          0.005),
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: Text(
-                                                    "23,400.00",
-                                                    style: theme
-                                                        .textTheme.bodyText1
-                                                        ?.copyWith(),
-                                                  ),
-                                                )
-                                              ],
+                                            padding: EdgeInsets.all(
+                                                Screens.bodyheight(context) *
+                                                    0.005),
+
+                                            alignment: Alignment.bottomRight,
+                                            // width: Screens.width(context),
+                                            child: Text(
+                                              "${context.read<LeaveApproveContoller>().filterListOfReq[i].createdDate}",
+                                              style: theme.textTheme.bodySmall
+                                                  ?.copyWith(
+                                                      color: Colors.grey),
                                             ),
-                                          )
+                                          ),
                                         ],
                                       ),
-
-                                      // SizedBox(
-                                      //   height:
-                                      //       Screens.bodyheight(context) * 0.01,
-                                      // ),
-
-                                      IntrinsicHeight(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              alignment: Alignment.topLeft,
-                                              padding: EdgeInsets.all(
-                                                  Screens.bodyheight(context) *
-                                                      0.005),
-                                              width: Screens.width(context) * 0.4,
-                                              child: Text(
-                                                "Saibaba Colony ,Coimbatore",
-                                                style: theme.textTheme.bodyText1
-                                                    ?.copyWith(),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.all(
-                                                  Screens.bodyheight(context) *
-                                                      0.005),
-
-                                              alignment: Alignment.bottomRight,
-                                              // width: Screens.width(context),
-                                              child: Text(
-                                                "23-Jun-2023 10:40 PM",
-                                                style: theme.textTheme.bodySmall
-                                                    ?.copyWith(
-                                                        color: Colors.grey),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {
-          //     Get.toNamed(ConstantRoutes.newcollection);
-          //   },
-          //   child: Icon(
-          //     Icons.add,
-          //     color: Colors.white,
-          //   ),
-          // )
-          ),
+        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Get.toNamed(ConstantRoutes.newcollection);
+        //   },
+        //   child: Icon(
+        //     Icons.add,
+        //     color: Colors.white,
+        //   ),
+        // )
+      ),
     );
   }
 }

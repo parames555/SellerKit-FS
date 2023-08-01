@@ -164,6 +164,8 @@ Container drawer3(BuildContext context) {
                                   if (dayType == "DayStart") {
                                     Get.toNamed(ConstantRoutes.dayEndPage);
                                   } else if (dayType == "DayEnd"||dayType == null) {
+                                                                      log("dayType");
+
                                     Get.toNamed(ConstantRoutes.daystartend);
                                   }
 

@@ -26,7 +26,7 @@ class LeaveReqPage extends StatefulWidget {
 }
 
 class _LeaveReqPageState extends State<LeaveReqPage> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey2 = GlobalKey<ScaffoldState>();
   Paddings paddings = Paddings();
   @override
   void initState() {
@@ -60,7 +60,7 @@ class _LeaveReqPageState extends State<LeaveReqPage> {
       onWillPop: onbackpress,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          key: scaffoldKey,
+          key: scaffoldKey2,
           drawer: drawer3(context),
           appBar: appbar("Leave Request", theme, context),
           body: Container(
